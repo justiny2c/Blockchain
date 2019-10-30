@@ -36,7 +36,7 @@ def valid_proof(block_string, proof):
     guess_hash = hashlib.sha256(guess).hexdigest()
     # TODO: change back to six
     # sys.stdout.write(guess_hash[:3] + " ")
-    return guess_hash[:6] == "000000"
+    return guess_hash[:5] == "00000"
 
 
 if __name__ == '__main__':
@@ -66,7 +66,7 @@ if __name__ == '__main__':
             break
 
         # TODO: Get the block from `data` and use it to look for a new proof
-        new_proof = proof_of_work(data)
+        new_proof = proof_of_work(data["last_block"])
 
         # When found, POST it to the server {"proof": new_proof, "id": id}
         post_data = {"proof": new_proof, "id": id}
@@ -74,7 +74,11 @@ if __name__ == '__main__':
         r = requests.post(url=node + "/mine", json=post_data)
         data = r.json()
 
-        coins_mined += 1
+        if data["message"] == "New Block Forged":
+            coins_mined += 1
+            print("1 coin added")
+        else:
+            print("Error: Nothing added")
 
         # TODO: If the server responds with a 'message' 'New Block Forged'
         # add 1 to the number of coins mined and print it.  Otherwise,
