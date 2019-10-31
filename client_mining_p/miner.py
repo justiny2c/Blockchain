@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
         if data["message"] == "New Block Forged":
             coins_mined += 1
-            print("1 coin added")
+            print(f"1 coin added, total: {coins_mined}")
         else:
             print("Error: Nothing added")
 

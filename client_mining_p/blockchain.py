@@ -4,6 +4,7 @@ import hashlib
 import json
 from time import time
 from uuid import uuid4
+
 from flask import Flask, jsonify, request
 
 
@@ -127,10 +128,10 @@ def mine():
     last_block = blockchain.last_block
     last_block_string = json.dumps(last_block, sort_keys=True).encode()
 
-    try: 
+    try:
         data = request.get_json()
         post_proof = data["proof"]
-        post_id = data["id"]
+        # post_id = data["id"]
 
     except KeyError:
         return jsonify({"message": "You need to pass in proof or id"}), 400
@@ -141,12 +142,17 @@ def mine():
         proof_hash = hashlib.sha256(proof).hexdigest()
 
         new_block = blockchain.new_block(post_proof, proof_hash)
-        return jsonify({'message': 'New Block Forged'}), 200
+        return jsonify({
+            'message': 'New Block Forged',
+            'index': new_block['index'],
+            'transactions': new_block['transactions'],
+            'proof': new_block['proof'],
+            'previous_hash': new_block['previous_hash'],
+        }), 200
     else:
         return jsonify({
             "message": "Error"
         }), 404
-
 
 
 @app.route('/last_block', methods=['GET'])
