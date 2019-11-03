@@ -1,0 +1,24 @@
+.balance {
+  display: flex;
+  flex-flow: row;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.balance p {
+  margin: 20px;
+  font-size: 1.2rem;
+}
+
+.update {
+  display: flex;
+  flex-flow: row;
+}
+
+.update form input {
+  padding: 10px;
+  font-size: 0.8rem;
+  font: sans-serif;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
