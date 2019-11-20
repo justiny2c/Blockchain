@@ -108,7 +108,7 @@ class Blockchain(object):
         guess = f'{block_string}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()  # "0000678"
         # return True or False
-        return guess_hash[:5] == "00000"
+        return guess_hash[:6] == "000000"
 
 
 # Instantiate our Node
